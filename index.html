@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JanSetu | Your Voice. Our Community.</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <div class="logo-icon">JS</div>
+            <div>
+                <h2>JanSetu</h2>
+                <span>Your Voice. Our Community.</span>
+            </div>
+        </div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#issues">Community Issues</a>
+            <button class="nav-button" onclick="openReportModal()">Report Issue</button>
+        </nav>
+
+        <button class="menu-button" onclick="toggleMenu()">☰</button>
+    </header>
+
+    <main>
+
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <div class="badge">🌍 COMMUNITY POWERED PLATFORM</div>
+
+                <h1>
+    Turn Local Problems Into
+    <span id="typing-text"></span>
+    <span class="typing-cursor">|</span>
+</h1>
+
+                <p>
+                    JanSetu connects citizens and communities to report,
+                    track, and verify everyday problems around them.
+                </p>
+
+                <div class="hero-buttons">
+                    <button class="primary-button" onclick="openReportModal()">Report an Issue <span>→</span></button>
+                    <button class="secondary-button" onclick="scrollToSection('how-it-works')">See How It Works</button>
+                </div>
+
+                <div class="trust-row">
+                    <div class="avatar-group">
+                        <div>👨</div>
+                        <div>👩</div>
+                        <div>🧑</div>
+                        <div>👨</div>
+                    </div>
+                    <p><strong>2,500+</strong> citizens making a difference</p>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="city-card">
+                    <div id="map"></div>
+                    <div class="city-header">
+                        <div>
+                            <span class="small-label">LIVE COMMUNITY MAP</span>
+                            <h3>Our Community</h3>
+                        </div>
+                        <div class="live-status"><span></span> Live</div>
+                    </div>
+
+                   <!-- <div class="map-area">
+                        <div class="map-grid"></div>
+
+                        <div class="road road-one"></div>
+                        <div class="road road-two"></div>
+                        <div class="road road-three"></div>
+
+                        <div class="map-pin pin-one">💡</div>
+                        <div class="map-pin pin-two">🚧</div>
+                        <div class="map-pin pin-three">🗑️</div>
+
+                        <div class="map-label label-one">Streetlight</div>
+                        <div class="map-label label-two">Pothole</div>
+                        <div class="map-label label-three">Waste</div>
+
+                        <div class="map-location">📍 Your Community</div>
+                    </div> -->
+
+                    <div class="map-footer">
+                        <div>
+                            <strong>48</strong>
+                            <span>Active Issues</span>
+                        </div>
+                        <div>
+                            <strong>126</strong>
+                            <span>Resolved This Month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="stat-box">
+                <span class="stat-icon">📢</span>
+                <div>
+                    <h3 id="reportedCount">1,248</h3>
+                    <p>Issues Reported</p>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <span class="stat-icon">✅</span>
+                <div>
+                    <h3 id="resolvedCount">856</h3>
+                    <p>Issues Resolved</p>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <span class="stat-icon">👥</span>
+                <div>
+                    <h3 id="citizenCount">2,500+</h3>
+                    <p>Active Citizens</p>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <span class="stat-icon">🌱</span>
+                <div>
+                    <h3>18</h3>
+                    <p>Communities Connected</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section how-section" id="how-it-works">
+            <div class="section-heading">
+                <span class="section-label">SIMPLE. TRANSPARENT. EFFECTIVE.</span>
+                <h2>How <span>JanSetu</span> Works</h2>
+                <p>From reporting a problem to seeing real progress, every step is transparent.</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">📸</div>
+                    <h3>Report</h3>
+                    <p>See a problem? Report it with a description, category, and location.</p>
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">🔍</div>
+                    <h3>Track</h3>
+                    <p>Follow the progress of your report as it moves through each stage.</p>
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">🛠️</div>
+                    <h3>Act</h3>
+                    <p>Communities and responsible teams take action to solve the problem.</p>
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step-card">
+                    <div class="step-number">04</div>
+                    <div class="step-icon">✅</div>
+                    <h3>Verify</h3>
+                    <p>Citizens confirm whether the reported issue has actually been resolved.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section issues-section" id="issues">
+            <div class="section-heading left-heading">
+                <div>
+                    <span class="section-label">WHAT PEOPLE ARE REPORTING</span>
+                    <h2>Issues Around <span>Your Community</span></h2>
+                </div>
+                <button class="outline-button" onclick="showAllIssues()">View All Issues →</button>
+            </div>
+
+            <div class="issue-grid" id="issueGrid">
+                <div class="issue-card">
+                    <div class="issue-image streetlight-image">💡</div>
+                    <div class="issue-content">
+                        <div class="issue-top">
+                            <span class="category-tag infrastructure">Infrastructure</span>
+                            <span class="status-tag progress">In Progress</span>
+                        </div>
+                        <h3>Broken Streetlight Near Gate 2</h3>
+                        <p>📍 Salt Lake, Kolkata</p>
+                        <div class="issue-bottom">
+                            <span>👥 24 supporters</span>
+                            <span>2 days ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-image pothole-image">🚧</div>
+                    <div class="issue-content">
+                        <div class="issue-top">
+                            <span class="category-tag roads">Roads</span>
+                            <span class="status-tag reported">Reported</span>
+                        </div>
+                        <h3>Large Pothole Near Main Road</h3>
+                        <p>📍 Sector V, Kolkata</p>
+                        <div class="issue-bottom">
+                            <span>👥 18 supporters</span>
+                            <span>5 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-image waste-image">🗑️</div>
+                    <div class="issue-content">
+                        <div class="issue-top">
+                            <span class="category-tag waste">Waste</span>
+                            <span class="status-tag resolved">Resolved</span>
+                        </div>
+                        <h3>Garbage Collection Point Overflow</h3>
+                        <p>📍 New Town, Kolkata</p>
+                        <div class="issue-bottom">
+                            <span>👥 42 supporters</span>
+                            <span>1 week ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="cta-content">
+                <span class="section-label">BE THE CHANGE</span>
+                <h2>Your Voice Can Make a Difference.</h2>
+                <p>Every report is a step towards building cleaner, safer, and better communities.</p>
+                <button class="primary-button" onclick="openReportModal()">Report an Issue <span>→</span></button>
+            </div>
+            <div class="cta-icon">🌉</div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-main">
+            <div class="footer-brand">
+                <div class="logo">
+                    <div class="logo-icon">JS</div>
+                    <div>
+                        <h2>JanSetu</h2>
+                        <span>Your Voice. Our Community.</span>
+                    </div>
+                </div>
+                <p>Building bridges between people and progress.</p>
+            </div>
+
+            <div class="footer-links">
+                <div>
+                    <h4>Platform</h4>
+                    <a href="#home">Home</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#issues">Community Issues</a>
+                </div>
+
+                <div>
+                    <h4>Community</h4>
+                    <a href="#" onclick="openReportModal()">Report an Issue</a>
+                    <a href="#">Leaderboard</a>
+                    <a href="#">Guidelines</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 JanSetu. Built for stronger communities.</p>
+            <p>Made with ❤️ for a better tomorrow.</p>
+            <p>Made By Abhrakantee Sarkar</p>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal">
+            <button class="close-button" onclick="closeReportModal()">×</button>
+
+            <div class="modal-header">
+                <h2>Report an Issue</h2>
+                <p>Help your community by reporting a problem.</p>
+            </div>
+
+            <form id="reportForm">
+                <div class="form-group">
+                    <label>Issue Title</label>
+                    <input type="text" id="issueTitle" placeholder="Example: Broken streetlight near Gate 2" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="issueCategory" required>
+                        <option value="">Select a category</option>
+                        <option value="Infrastructure">Infrastructure</option>
+                        <option value="Roads">Roads</option>
+                        <option value="Waste">Waste</option>
+                        <option value="Water">Water</option>
+                        <option value="Public Safety">Public Safety</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="issueLocation" placeholder="Example: Sector V, Kolkata" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="issueDescription" placeholder="Describe the problem..." required></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">Submit Report</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <span>✅</span>
+        <p>Issue reported successfully!</p>
+    </div>
+
+    <script src="script.js"></script>
+
+     <script async
+     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6PJy8QPL7JzvSuQdIZ8rE2Kdb6fHeQFk&callback=initMap">
+     </script>
+</body>
+</html>
