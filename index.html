@@ -1,347 +1,148 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JanSetu | Your Voice. Our Community.</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#081b35">
+  <meta name="description" content="JanSetu helps communities report, track and resolve civic issues with verified locations and real photographic evidence.">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="assets/icon-192.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=5">
+  <title>JanSetu — Report. Track. Transform.</title>
 </head>
 <body>
+  <!-- Local SVG icon library: crisp on mobile, no emoji or icon-font dependency. -->
+  <svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5m-7 7 7-7 7 7"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v11H3zM9 21v-7h6v7"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 7h4l2-3h4l2 3h4v13H4z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-photo" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9M10 21h4"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 3.5-8 8-8s8 3 8 8"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m7.5 12 3 3 6-6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+    <symbol id="i-location" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 9 4v6c0 6-4 9-9 10C7 21 3 18 3 12V6z"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 3"/></symbol>
+    <symbol id="i-log-out" viewBox="0 0 24 24"><path d="M10 3H5v18h5m4-4 5-5-5-5m5 5H9"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 7h16M7 12h10m-7 5h4"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.5 9c0 5-8.5 11-8.5 11S3.5 14 3.5 9A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 8.5 3z"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2zM9 3v16m6-14v16"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7V3h-4M4 17v4h4M20 3a9 9 0 0 0-16 5m0 13a9 9 0 0 0 16-5"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="5"/><path d="m12 11 9-9m-5 5 3 3"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 11v6m0-10v.2"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M13 4h7v7m0-7-9 9M20 14v6H4V4h6"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 24 24"><path d="M8 5v14m-4-4 4 4 4-4m4 4V5m-4 4 4-4 4 4"/></symbol>
+  </svg>
 
-    <header class="navbar">
-        <div class="logo">
-            <div class="logo-icon">JS</div>
-            <div>
-                <h2>JanSetu</h2>
-                <span>Your Voice. Our Community.</span>
-            </div>
+  <div id="toastRegion" class="toast-region" role="status" aria-live="polite"></div>
+
+  <!-- Auth guard: the application is not rendered for unauthenticated users. -->
+  <section class="auth-screen" id="authScreen">
+    <div class="auth-glow auth-glow-a"></div><div class="auth-glow auth-glow-b"></div>
+    <div class="auth-shell">
+      <div class="auth-story">
+        <a class="brand brand-light" href="./" aria-label="JanSetu home">
+          <span class="brand-seal"><img src="assets/jansetu-logo.jpg" alt="" width="44" height="44"></span>
+          <span class="brand-copy"><strong>JanSetu<span class="brand-dot">.</span></strong><small>THE CITIZEN CONNECTION</small></span>
+        </a>
+        <div class="auth-story-body">
+          <div class="eyebrow"><span class="status-light"></span> BUILT FOR BETTER NEIGHBOURHOODS</div>
+          <h1>Every street<br>has a <em>story.</em><br>Make yours count.</h1>
+          <p>A more connected way to report local problems, share evidence and follow real progress. Your community starts here.</p>
+          <div class="auth-photo"><img src="assets/road.webp" alt="A real damaged road, showing the type of civic issue JanSetu helps report"><div class="auth-photo-shade"></div><div class="photo-float"><span class="photo-float-icon"><svg><use href="#i-pin"></use></svg></span><div><small>REAL PLACES. REAL IMPACT.</small><strong>Make your neighbourhood heard.</strong></div></div></div>
         </div>
+        <span class="auth-story-foot">REPORT WITH PURPOSE <span></span> TRACK WITH CLARITY <span></span> BUILD TOGETHER</span>
+      </div>
+      <div class="auth-panel">
+        <div class="auth-panel-inner">
+          <div class="auth-mobile-brand brand"><span class="brand-seal"><img src="assets/jansetu-logo.jpg" alt="" width="44" height="44"></span><span class="brand-copy"><strong>JanSetu<span class="brand-dot">.</span></strong><small>THE CITIZEN CONNECTION</small></span></div>
+          <div class="auth-heading"><span class="overline">YOUR COMMUNITY. YOUR VOICE.</span><h2 id="authHeading">Create your account</h2><p id="authSubheading">Join JanSetu to start making an impact.</p></div>
+          <div class="auth-tabs" role="tablist" aria-label="Account options">
+            <button type="button" id="tabSignup" class="auth-tab is-active" role="tab" aria-selected="true" data-auth-mode="signup">Register</button>
+            <button type="button" id="tabSignin" class="auth-tab" role="tab" aria-selected="false" data-auth-mode="signin">Sign in</button>
+            <button type="button" id="tabPhone" class="auth-tab" role="tab" aria-selected="false" data-auth-mode="phone">Mobile OTP</button>
+          </div>
+          <form id="emailAuthForm" class="auth-form">
+            <div class="form-field" id="nameField"><label for="authName">Full name</label><input type="text" id="authName" name="fullName" autocomplete="name" placeholder="Your full name" minlength="2" maxlength="80" required></div>
+            <div class="form-field"><label for="authEmail">Email address</label><input id="authEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+            <div class="form-field"><div class="label-row"><label for="authPassword">Password</label><button type="button" id="forgotPassword" class="text-button" hidden>Forgot password?</button></div><input id="authPassword" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" minlength="8" required></div>
+            <button class="button primary full-width" id="emailSubmit" type="submit"><span>Create account</span><svg><use href="#i-arrow"></use></svg></button>
+          </form>
+          <form id="phoneAuthForm" class="auth-form" hidden>
+            <div class="info-strip"><svg><use href="#i-info"></use></svg><p>A one-time verification code will be sent by SMS. Enter your number with country code, for example +91.</p></div>
+            <div class="form-field"><label for="phoneNumber">Mobile number</label><input type="tel" id="phoneNumber" autocomplete="tel" inputmode="tel" placeholder="+91 98765 43210" pattern="\+[1-9][0-9]{7,14}" required></div>
+            <button class="button primary full-width" type="submit" id="phoneSend">Send verification code<svg><use href="#i-arrow"></use></svg></button>
+          </form>
+          <form id="verifyPhoneForm" class="auth-form" hidden>
+            <p class="field-hint" id="otpDescription">Enter the code sent to your mobile number.</p>
+            <div class="form-field"><label for="phoneOtp">6-digit verification code</label><input type="text" id="phoneOtp" autocomplete="one-time-code" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="000000" required></div>
+            <button class="button primary full-width" type="submit" id="phoneVerify">Verify and continue<svg><use href="#i-check"></use></svg></button>
+            <button class="text-button center" type="button" id="changePhone">Use another number</button>
+          </form>
+          <div id="googleAuthDivider" class="divider-label"><span>OR CONTINUE WITH</span></div>
+          <button id="googleAuthButton" type="button" class="button google-button full-width"><svg class="google-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.6 12.23c0-.71-.06-1.37-.17-2.02H12v3.83h5.39a4.58 4.58 0 0 1-1.99 3v2.48h3.22c1.88-1.73 2.98-4.28 2.98-7.29Z"/><path fill="#34A853" d="M12 22c2.7 0 4.96-.9 6.62-2.48l-3.22-2.49c-.9.6-2.05.96-3.4.96a6 6 0 0 1-5.63-4.17H3.04v2.57A10 10 0 0 0 12 22Z"/><path fill="#FBBC05" d="M6.37 13.82a6.01 6.01 0 0 1 0-3.64V7.61H3.04a10 10 0 0 0 0 8.78l3.33-2.57Z"/><path fill="#EA4335" d="M12 6c1.47 0 2.8.5 3.83 1.5l2.87-2.87A9.53 9.53 0 0 0 12 2a10 10 0 0 0-8.96 5.61l3.33 2.57A6 6 0 0 1 12 6Z"/></svg><span>Continue with Google</span></button>
+          <div id="authNotice" class="auth-notice" hidden></div>
+          <p class="auth-terms">By creating an account you agree to use JanSetu responsibly. Do not upload others' private information without permission.</p>
+        </div>
+        <div class="auth-bottom"><span>SECURE SIGN-IN</span><span class="auth-bottom-dot"></span><span>YOUR VOICE MATTERS</span></div>
+      </div>
+    </div>
+    <footer class="auth-credit">Made by Abhrakantee Sarkar</footer>
+  </section>
 
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#how-it-works">How It Works</a>
-            <a href="#issues">Community Issues</a>
-            <button class="nav-button" onclick="openReportModal()">Report Issue</button>
-        </nav>
-
-        <button class="menu-button" onclick="toggleMenu()">☰</button>
+  <div id="appShell" class="app-shell" hidden>
+    <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+    <header class="site-header glass">
+      <div class="header-content">
+        <button class="brand" data-view="home" aria-label="Go to dashboard"><span class="brand-seal"><img src="assets/jansetu-logo.jpg" alt="" width="40" height="40"></span><span class="brand-copy"><strong>JanSetu<span class="brand-dot">.</span></strong><small>THE CITIZEN CONNECTION</small></span></button>
+        <nav class="desktop-nav" aria-label="Main navigation"><button class="nav-link is-active" data-view="home">Overview</button><button class="nav-link" data-view="explore">Explore issues</button><button class="nav-link" data-view="activity">My activity</button><button class="nav-link" data-view="profile">Profile</button></nav>
+        <div class="header-actions"><button class="icon-button" id="notificationButton" title="Notifications" aria-label="View notifications"><svg><use href="#i-bell"></use></svg><span id="notificationDot" class="notification-dot" hidden></span></button><button class="button header-report" data-view="report"><svg><use href="#i-plus"></use></svg> New report</button><button class="avatar-button" data-view="profile" id="avatarButton" aria-label="My profile">JS</button></div>
+      </div>
     </header>
-
-    <main>
-
-        <section class="hero" id="home">
-            <div class="hero-content">
-                <div class="badge">🌍 COMMUNITY POWERED PLATFORM</div>
-
-                <h1>
-    Turn Local Problems Into
-    <span id="typing-text"></span>
-    <span class="typing-cursor">|</span>
-</h1>
-
-                <p>
-                    JanSetu connects citizens and communities to report,
-                    track, and verify everyday problems around them.
-                </p>
-
-                <div class="hero-buttons">
-                    <button class="primary-button" onclick="openReportModal()">Report an Issue <span>→</span></button>
-                    <button class="secondary-button" onclick="scrollToSection('how-it-works')">See How It Works</button>
-                </div>
-
-                <div class="trust-row">
-                    <div class="avatar-group">
-                        <div>👨</div>
-                        <div>👩</div>
-                        <div>🧑</div>
-                        <div>👨</div>
-                    </div>
-                    <p><strong>2,500+</strong> citizens making a difference</p>
-                </div>
-            </div>
-
-            <div class="hero-visual">
-                <div class="city-card">
-                    <div id="map"></div>
-                    <div class="city-header">
-                        <div>
-                            <span class="small-label">LIVE COMMUNITY MAP</span>
-                            <h3>Our Community</h3>
-                        </div>
-                        <div class="live-status"><span></span> Live</div>
-                    </div>
-
-                   <!-- <div class="map-area">
-                        <div class="map-grid"></div>
-
-                        <div class="road road-one"></div>
-                        <div class="road road-two"></div>
-                        <div class="road road-three"></div>
-
-                        <div class="map-pin pin-one">💡</div>
-                        <div class="map-pin pin-two">🚧</div>
-                        <div class="map-pin pin-three">🗑️</div>
-
-                        <div class="map-label label-one">Streetlight</div>
-                        <div class="map-label label-two">Pothole</div>
-                        <div class="map-label label-three">Waste</div>
-
-                        <div class="map-location">📍 Your Community</div>
-                    </div> -->
-
-                    <div class="map-footer">
-                        <div>
-                            <strong>48</strong>
-                            <span>Active Issues</span>
-                        </div>
-                        <div>
-                            <strong>126</strong>
-                            <span>Resolved This Month</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="stats-section">
-            <div class="stat-box">
-                <span class="stat-icon">📢</span>
-                <div>
-                    <h3 id="reportedCount">1,248</h3>
-                    <p>Issues Reported</p>
-                </div>
-            </div>
-
-            <div class="stat-box">
-                <span class="stat-icon">✅</span>
-                <div>
-                    <h3 id="resolvedCount">856</h3>
-                    <p>Issues Resolved</p>
-                </div>
-            </div>
-
-            <div class="stat-box">
-                <span class="stat-icon">👥</span>
-                <div>
-                    <h3 id="citizenCount">2,500+</h3>
-                    <p>Active Citizens</p>
-                </div>
-            </div>
-
-            <div class="stat-box">
-                <span class="stat-icon">🌱</span>
-                <div>
-                    <h3>18</h3>
-                    <p>Communities Connected</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section how-section" id="how-it-works">
-            <div class="section-heading">
-                <span class="section-label">SIMPLE. TRANSPARENT. EFFECTIVE.</span>
-                <h2>How <span>JanSetu</span> Works</h2>
-                <p>From reporting a problem to seeing real progress, every step is transparent.</p>
-            </div>
-
-            <div class="steps-container">
-                <div class="step-card">
-                    <div class="step-number">01</div>
-                    <div class="step-icon">📸</div>
-                    <h3>Report</h3>
-                    <p>See a problem? Report it with a description, category, and location.</p>
-                </div>
-
-                <div class="step-line"></div>
-
-                <div class="step-card">
-                    <div class="step-number">02</div>
-                    <div class="step-icon">🔍</div>
-                    <h3>Track</h3>
-                    <p>Follow the progress of your report as it moves through each stage.</p>
-                </div>
-
-                <div class="step-line"></div>
-
-                <div class="step-card">
-                    <div class="step-number">03</div>
-                    <div class="step-icon">🛠️</div>
-                    <h3>Act</h3>
-                    <p>Communities and responsible teams take action to solve the problem.</p>
-                </div>
-
-                <div class="step-line"></div>
-
-                <div class="step-card">
-                    <div class="step-number">04</div>
-                    <div class="step-icon">✅</div>
-                    <h3>Verify</h3>
-                    <p>Citizens confirm whether the reported issue has actually been resolved.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section issues-section" id="issues">
-            <div class="section-heading left-heading">
-                <div>
-                    <span class="section-label">WHAT PEOPLE ARE REPORTING</span>
-                    <h2>Issues Around <span>Your Community</span></h2>
-                </div>
-                <button class="outline-button" onclick="showAllIssues()">View All Issues →</button>
-            </div>
-
-            <div class="issue-grid" id="issueGrid">
-                <div class="issue-card">
-                    <div class="issue-image streetlight-image">💡</div>
-                    <div class="issue-content">
-                        <div class="issue-top">
-                            <span class="category-tag infrastructure">Infrastructure</span>
-                            <span class="status-tag progress">In Progress</span>
-                        </div>
-                        <h3>Broken Streetlight Near Gate 2</h3>
-                        <p>📍 Salt Lake, Kolkata</p>
-                        <div class="issue-bottom">
-                            <span>👥 24 supporters</span>
-                            <span>2 days ago</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="issue-card">
-                    <div class="issue-image pothole-image">🚧</div>
-                    <div class="issue-content">
-                        <div class="issue-top">
-                            <span class="category-tag roads">Roads</span>
-                            <span class="status-tag reported">Reported</span>
-                        </div>
-                        <h3>Large Pothole Near Main Road</h3>
-                        <p>📍 Sector V, Kolkata</p>
-                        <div class="issue-bottom">
-                            <span>👥 18 supporters</span>
-                            <span>5 hours ago</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="issue-card">
-                    <div class="issue-image waste-image">🗑️</div>
-                    <div class="issue-content">
-                        <div class="issue-top">
-                            <span class="category-tag waste">Waste</span>
-                            <span class="status-tag resolved">Resolved</span>
-                        </div>
-                        <h3>Garbage Collection Point Overflow</h3>
-                        <p>📍 New Town, Kolkata</p>
-                        <div class="issue-bottom">
-                            <span>👥 42 supporters</span>
-                            <span>1 week ago</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="cta-section">
-            <div class="cta-content">
-                <span class="section-label">BE THE CHANGE</span>
-                <h2>Your Voice Can Make a Difference.</h2>
-                <p>Every report is a step towards building cleaner, safer, and better communities.</p>
-                <button class="primary-button" onclick="openReportModal()">Report an Issue <span>→</span></button>
-            </div>
-            <div class="cta-icon">🌉</div>
-        </section>
-
+    <main id="mainContent">
+      <section class="view is-active" id="view-home" aria-label="Overview">
+        <div class="page-container">
+          <div class="hero-grid">
+            <div class="hero-copy"><div class="eyebrow"><span class="status-light"></span> YOUR COMMUNITY IN MOTION</div><h1>Small actions.<br><span class="shine-text">Stronger streets.</span></h1><p>Spot something that needs attention? Share it with your neighbourhood, show the evidence, and make every step visible.</p><div class="hero-ctas"><button class="button primary large" data-view="report">Report an issue <svg><use href="#i-arrow"></use></svg></button><button class="button ghost large" data-view="explore">Explore the community <svg><use href="#i-chevron"></use></svg></button></div><div class="hero-proof"><span class="hero-proof-icon"><svg><use href="#i-shield"></use></svg></span><span>Real reports. Transparent progress. Community-first.</span></div></div>
+            <div class="hero-scene"><div class="hero-scene-photo"><img src="assets/road.webp" alt="Damaged road awaiting repair" fetchpriority="high"></div><div class="hero-scene-sheen"></div><div class="scene-top"><span class="scene-kicker">ON THE GROUND</span><span class="scene-live"><span class="status-light"></span> COMMUNITY REPORTING</span></div><div class="scene-bottom"><span class="scene-index">01 / 03</span><div><strong>Make issues visible.</strong><small>From first report to final resolution.</small></div><span class="scene-expand"><svg><use href="#i-arrow"></use></svg></span></div><div class="float-card glass"><span class="float-card-icon"><svg><use href="#i-location"></use></svg></span><span><small>LOCATION-AWARE</small><strong>Every report has a place.</strong></span></div></div>
+          </div>
+          <div class="location-banner glass" id="locationPrompt"><div class="location-banner-icon"><svg><use href="#i-location"></use></svg></div><div class="location-banner-copy"><strong>Make JanSetu local to you.</strong><p>Enable location to discover nearby reports on the map. Your position is not published until you attach it to a report.</p></div><div class="location-banner-actions"><button type="button" class="button primary" id="enableDashboardLocation">Enable location <svg><use href="#i-arrow"></use></svg></button><button type="button" class="text-button" id="dismissLocationPrompt">Not now</button></div></div>
+          <div class="stats-grid" id="statsGrid"><div class="stat glass"><span class="stat-label">TOTAL REPORTS</span><div class="stat-value"><strong id="statTotal">—</strong><span class="stat-symbol"><svg><use href="#i-grid"></use></svg></span></div><small>From community members</small></div><div class="stat glass"><span class="stat-label">IN PROGRESS</span><div class="stat-value"><strong id="statProgress">—</strong><span class="stat-symbol"><svg><use href="#i-activity"></use></svg></span></div><small>Being followed up</small></div><div class="stat glass"><span class="stat-label">RESOLVED / VERIFIED</span><div class="stat-value"><strong id="statResolved">—</strong><span class="stat-symbol"><svg><use href="#i-check-circle"></use></svg></span></div><small>Reported outcomes</small></div><div class="stat glass"><span class="stat-label">YOUR CONTRIBUTIONS</span><div class="stat-value"><strong id="statMine">—</strong><span class="stat-symbol"><svg><use href="#i-user"></use></svg></span></div><small>Issues you have shared</small></div></div>
+          <div class="section-head row-head"><div><span class="overline">THE COMMUNITY FEED</span><h2>What's happening <span>near you.</span></h2><p>Browse recent reports submitted by JanSetu members.</p></div><button class="button subtle" data-view="explore">View all issues <svg><use href="#i-arrow"></use></svg></button></div>
+          <div id="homeIssueGrid" class="issue-grid"></div>
+          <div class="section-head how-head"><span class="overline">SIMPLE BY DESIGN</span><h2>From observation <span>to action.</span></h2><p>Every report is a clear, traceable record of what matters to your neighbourhood.</p></div>
+          <div class="steps-grid"><article class="step-card glass"><span class="step-count">01 / REPORT</span><div class="step-graphic"><svg><use href="#i-camera"></use></svg></div><h3>Capture what matters.</h3><p>Take a photo or choose one from your gallery. Explain what needs attention.</p></article><article class="step-card glass"><span class="step-count">02 / LOCATE</span><div class="step-graphic"><svg><use href="#i-pin"></use></svg></div><h3>Place it on the map.</h3><p>Share GPS coordinates with permission and add a useful nearby landmark.</p></article><article class="step-card glass"><span class="step-count">03 / TRACK</span><div class="step-graphic"><svg><use href="#i-activity"></use></svg></div><h3>Follow its progress.</h3><p>Support local reports, receive updates, and verify completed work.</p></article></div>
+          <div class="feature-banner glass"><div><span class="overline">BUILT FOR EVERY COMMUNITY</span><h2>Your neighbourhood<br>deserves to be heard.</h2><p>A public issue becomes a shared priority when the right people can see it.</p><button class="button primary" data-view="report">Start a new report <svg><use href="#i-arrow"></use></svg></button></div><div class="feature-images"><img src="assets/streetlight.webp" alt="A damaged streetlight"><img src="assets/waste.webp" alt="Public waste collection problem"></div></div>
+        </div>
+      </section>
+      <section class="view" id="view-explore" aria-label="Explore community issues" hidden><div class="page-container section-page"><div class="page-heading"><div><span class="overline">COMMUNITY INTELLIGENCE</span><h1>Explore <span>issues.</span></h1><p>Find community-reported problems, see their location and add your support.</p></div><button class="button primary" data-view="report"><svg><use href="#i-plus"></use></svg> Submit a report</button></div><div class="explore-controls glass"><label class="search-box" for="issueSearch"><svg><use href="#i-search"></use></svg><input id="issueSearch" type="search" placeholder="Search title, landmark or description" autocomplete="off"></label><label class="filter-box"><svg><use href="#i-filter"></use></svg><select id="categoryFilter" aria-label="Filter by category"><option value="all">All categories</option><option>Roads</option><option>Streetlights</option><option>Waste</option><option>Water</option><option>Public Safety</option><option>Infrastructure</option><option>Other</option></select></label><label class="filter-box"><select id="statusFilter" aria-label="Filter by status"><option value="all">All statuses</option><option>Reported</option><option>In Review</option><option>In Progress</option><option>Resolved</option><option>Verified</option></select></label><label class="filter-box"><svg><use href="#i-sort"></use></svg><select id="sortFilter" aria-label="Sort reports"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="support">Most supported</option><option value="nearby">Closest to me</option></select></label></div><div class="explore-layout"><div><div class="list-meta"><strong id="filterCount">All reports</strong><button class="text-button" type="button" id="resetFilters">Clear filters</button></div><div id="exploreIssueGrid" class="issue-grid explore-issue-grid"></div><button id="loadMoreButton" class="button subtle full-width" hidden>Load more reports</button></div><aside class="map-sidebar glass"><div class="map-head"><div><span class="overline">LOCATION VIEW</span><h3>Community map</h3></div><button class="icon-button" id="mapLocateButton" title="Locate me" aria-label="Find my location"><svg><use href="#i-location"></use></svg></button></div><div id="exploreMap" class="map-area" aria-label="Map of reported issues"></div><div class="map-caption"><svg><use href="#i-info"></use></svg><span>Only reports with shared GPS coordinates appear on the map.</span></div></aside></div></div></section>
+      <section class="view" id="view-report" aria-label="Submit issue" hidden><div class="page-container section-page"><div class="page-heading"><div><span class="overline">MAKE IT COUNT</span><h1>Report an <span>issue.</span></h1><p>Use a clear photo, a precise location and a helpful description.</p></div><div class="report-step-indicator"><span>01</span> EVIDENCE <span class="thin-rule"></span><span>02</span> LOCATION <span class="thin-rule"></span><span>03</span> SUBMIT</div></div><div class="report-layout"><form id="reportForm" class="report-card glass"><div class="form-section-title"><span class="section-number">01</span><div><h2>Describe the problem</h2><p>Tell your community what needs to be fixed.</p></div></div><div class="form-field"><label for="reportTitle">Issue title <span class="required">*</span></label><input id="reportTitle" name="title" maxlength="110" minlength="8" placeholder="e.g. Deep pothole on Station Road" required></div><div class="form-field"><label for="reportCategory">Category <span class="required">*</span></label><select id="reportCategory" required><option value="">Choose the issue category</option><option>Roads</option><option>Streetlights</option><option>Waste</option><option>Water</option><option>Public Safety</option><option>Infrastructure</option><option>Other</option></select></div><div class="form-field"><label for="reportDescription">What's happening? <span class="required">*</span></label><textarea id="reportDescription" name="description" rows="5" minlength="20" maxlength="2500" placeholder="Describe the exact problem, its impact, and anything that could help someone locate it." required></textarea><div class="field-hint">Minimum 20 characters. Never include someone else's personal information.</div></div><div class="form-section-title with-rule"><span class="section-number">02</span><div><h2>Add photo evidence</h2><p>Upload one authentic image of the issue.</p></div></div><div class="upload-zone" id="uploadZone"><div id="uploadPlaceholder"><div class="upload-icon"><svg><use href="#i-photo"></use></svg></div><strong>Show us the issue.</strong><p>Clear photographs help communities understand and act.</p><span class="upload-support">JPEG, PNG or WebP · Up to 8 MB</span></div><div class="upload-preview" id="uploadPreview" hidden><img id="previewImage" alt="Photo selected for report"><button class="icon-button remove-preview" type="button" id="removePhoto" title="Remove photo" aria-label="Remove photo"><svg><use href="#i-close"></use></svg></button></div><div class="upload-buttons"><button type="button" class="button subtle" id="openCamera"><svg><use href="#i-camera"></use></svg> Take photo</button><button type="button" class="button subtle" id="openGallery"><svg><use href="#i-photo"></use></svg> Choose gallery</button></div><input type="file" id="cameraInput" accept="image/*" capture="environment" hidden><input type="file" id="galleryInput" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" hidden></div><div class="form-section-title with-rule"><span class="section-number">03</span><div><h2>Pinpoint the location</h2><p>Location permission is optional until you choose to share it.</p></div></div><div class="form-field"><label for="reportAddress">Street, neighbourhood or landmark <span class="required">*</span></label><input id="reportAddress" maxlength="200" placeholder="e.g. Outside Station Road bus stop" required></div><div class="location-box"><div><svg><use href="#i-location"></use></svg><span><strong id="locationLabel">GPS not yet attached</strong><small id="locationDetail">Tap below to securely locate the issue.</small></span></div><button type="button" class="button outlined" id="useLocation">Use current location</button></div><p class="privacy-hint"><svg><use href="#i-shield"></use></svg> Shared report photos and coordinates are visible to the community. Only capture an issue from a safe location; never enter a hazardous area for a photo.</p><button type="submit" class="button primary submit-report full-width" id="submitReportButton">Publish community report <svg><use href="#i-arrow"></use></svg></button><p class="field-hint center">Reports remain visible to other signed-in users. Only authorised moderators can change the official status.</p></form><aside class="report-side"><div class="side-card glass"><span class="overline">YOUR REPORT, YOUR IMPACT</span><h3>A clearer picture creates stronger action.</h3><p>Good reports are specific, honest and easy to locate.</p><div class="guideline"><span>01</span><p>Capture the problem clearly, without putting yourself at risk.</p></div><div class="guideline"><span>02</span><p>Include an exact landmark or nearby road name.</p></div><div class="guideline"><span>03</span><p>Describe the real-world impact in your own words.</p></div></div><div class="side-photo"><img src="assets/streetlight.webp" alt="Example of streetlight infrastructure"><div>GOOD EVIDENCE. BETTER ACTION.</div></div></aside></div></div></section>
+      <section class="view" id="view-activity" aria-label="My activity" hidden><div class="page-container section-page"><div class="page-heading"><div><span class="overline">YOUR CIVIC FOOTPRINT</span><h1>My <span>activity.</span></h1><p>Everything you've reported, supported and followed.</p></div><button class="button primary" data-view="report"><svg><use href="#i-plus"></use></svg> New report</button></div><div class="activity-stats"><div class="glass activity-stat"><small>ISSUES REPORTED</small><strong id="activityReported">0</strong></div><div class="glass activity-stat"><small>ISSUES SUPPORTED</small><strong id="activitySupported">0</strong></div><div class="glass activity-stat"><small>RESOLVED & VERIFIED</small><strong id="activityResolved">0</strong></div></div><div class="activity-layout"><div><div class="section-head compact"><span class="overline">MY SUBMISSIONS</span><h2>Reported by me</h2></div><div id="myIssueGrid" class="issue-grid activity-issue-grid"></div></div><aside class="notifications-panel glass" id="notificationsPanel"><div class="notifications-head"><h3>Notifications</h3><button type="button" class="text-button" id="markAllRead">Mark all read</button></div><div id="notificationList" class="notification-list"></div></aside></div></div></section>
+      <section class="view" id="view-profile" aria-label="Account profile" hidden><div class="page-container section-page"><div class="page-heading"><div><span class="overline">YOUR JANSETU ACCOUNT</span><h1>Profile & <span>settings.</span></h1><p>Manage your account and see how you contribute.</p></div></div><div class="profile-layout"><section class="profile-card glass"><div class="profile-cover"></div><div class="profile-avatar" id="profileAvatar">JS</div><div class="profile-details"><span class="verified-label"><svg><use href="#i-shield"></use></svg> JANSETU MEMBER</span><h2 id="profileName">Member</h2><p id="profileEmail">—</p><div class="profile-meta"><span><svg><use href="#i-clock"></use></svg> Joined <span id="profileJoined">—</span></span></div><button class="button outlined" id="signOutButton"><svg><use href="#i-log-out"></use></svg> Sign out of JanSetu</button></div></section><section class="settings-card glass"><span class="overline">ACCOUNT SETTINGS</span><h2>Personal information</h2><form id="profileForm" class="profile-form"><div class="form-field"><label for="profileFullName">Display name</label><input id="profileFullName" minlength="2" maxlength="80" required></div><div class="form-field"><label for="profileContact">Email / phone</label><input id="profileContact" disabled></div><button type="submit" class="button primary" id="saveProfileButton">Save changes <svg><use href="#i-check"></use></svg></button></form><div class="settings-divider"></div><h3>Privacy & security</h3><p class="settings-info">JanSetu only requests your location when you select “Use current location”. Public report photos and GPS pins should not include sensitive personal information.</p><button type="button" class="button subtle" id="profilePasswordReset">Request password reset <svg><use href="#i-arrow"></use></svg></button></section></div><section id="adminPanel" class="admin-panel glass" hidden><div class="section-head compact"><span class="overline">MODERATOR ACCESS</span><h2>Review community reports</h2><p>Only authorised moderators can change report status.</p></div><div id="adminReportList" class="admin-list"></div></section></div></section>
     </main>
+    <footer class="site-footer"><div class="footer-inner"><div class="footer-top"><div class="footer-identity"><span class="brand-seal"><img src="assets/jansetu-logo.jpg" alt="" width="42" height="42"></span><div><strong>JanSetu<span class="brand-dot">.</span></strong><p>Better streets begin with all of us.</p></div></div><div class="footer-tagline">BUILT FOR PEOPLE. POWERED BY COMMUNITY.</div></div><div class="footer-bottom"><span>© <span id="copyrightYear">2026</span> JanSetu. Civic connection, reimagined.</span><strong>Made by Abhrakantee Sarkar</strong></div></div></footer>
+    <nav class="mobile-nav glass" aria-label="Mobile navigation"><button type="button" class="mobile-link is-active" data-view="home"><svg><use href="#i-home"></use></svg><span>Home</span></button><button type="button" class="mobile-link" data-view="explore"><svg><use href="#i-grid"></use></svg><span>Explore</span></button><button type="button" class="mobile-link mobile-report" data-view="report"><span class="mobile-report-icon"><svg><use href="#i-plus"></use></svg></span><span>Report</span></button><button type="button" class="mobile-link" data-view="activity"><svg><use href="#i-activity"></use></svg><span>Activity</span></button><button type="button" class="mobile-link" data-view="profile"><svg><use href="#i-user"></use></svg><span>Profile</span></button></nav>
+  </div>
 
-    <footer>
-        <div class="footer-main">
-            <div class="footer-brand">
-                <div class="logo">
-                    <div class="logo-icon">JS</div>
-                    <div>
-                        <h2>JanSetu</h2>
-                        <span>Your Voice. Our Community.</span>
-                    </div>
-                </div>
-                <p>Building bridges between people and progress.</p>
-            </div>
-
-            <div class="footer-links">
-                <div>
-                    <h4>Platform</h4>
-                    <a href="#home">Home</a>
-                    <a href="#how-it-works">How It Works</a>
-                    <a href="#issues">Community Issues</a>
-                </div>
-
-                <div>
-                    <h4>Community</h4>
-                    <a href="#" onclick="openReportModal()">Report an Issue</a>
-                    <a href="#">Leaderboard</a>
-                    <a href="#">Guidelines</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>© 2026 JanSetu. Built for stronger communities.</p>
-            <p>Made with ❤️ for a better tomorrow.</p>
-            <p>Made By Abhrakantee Sarkar</p>
-        </div>
-    </footer>
-
-    <div class="modal-overlay" id="reportModal">
-        <div class="modal">
-            <button class="close-button" onclick="closeReportModal()">×</button>
-
-            <div class="modal-header">
-                <h2>Report an Issue</h2>
-                <p>Help your community by reporting a problem.</p>
-            </div>
-
-            <form id="reportForm">
-                <div class="form-group">
-                    <label>Issue Title</label>
-                    <input type="text" id="issueTitle" placeholder="Example: Broken streetlight near Gate 2" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Category</label>
-                    <select id="issueCategory" required>
-                        <option value="">Select a category</option>
-                        <option value="Infrastructure">Infrastructure</option>
-                        <option value="Roads">Roads</option>
-                        <option value="Waste">Waste</option>
-                        <option value="Water">Water</option>
-                        <option value="Public Safety">Public Safety</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Location</label>
-                    <input type="text" id="issueLocation" placeholder="Example: Sector V, Kolkata" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea id="issueDescription" placeholder="Describe the problem..." required></textarea>
-                </div>
-
-                <button type="submit" class="submit-button">Submit Report</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="toast" id="toast">
-        <span>✅</span>
-        <p>Issue reported successfully!</p>
-    </div>
-
-    <script src="script.js"></script>
-
-     <script async
-     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6PJy8QPL7JzvSuQdIZ8rE2Kdb6fHeQFk&callback=initMap">
-     </script>
+  <dialog id="reportDialog" class="detail-dialog glass" aria-labelledby="detailTitle"><div class="dialog-bar"><span class="overline">COMMUNITY ISSUE</span><button type="button" class="icon-button" id="closeDialog" aria-label="Close issue details"><svg><use href="#i-close"></use></svg></button></div><div id="dialogContent"></div></dialog>
+  <dialog id="passwordDialog" class="detail-dialog glass" aria-labelledby="passwordDialogTitle"><div class="dialog-bar"><span class="overline">SECURE ACCOUNT RECOVERY</span><button type="button" class="icon-button" id="closePasswordDialog" aria-label="Close password recovery"><svg><use href="#i-close"></use></svg></button></div><div class="detail-body"><h2 id="passwordDialogTitle">Create a new password</h2><p>Choose a unique password with at least eight characters.</p><form id="newPasswordForm"><div class="form-field"><label for="newPassword">New password</label><input id="newPassword" type="password" autocomplete="new-password" minlength="8" required></div><button type="submit" class="button primary full-width" id="saveNewPassword">Update password <svg><use href="#i-check"></use></svg></button></form></div></dialog>
+  <script src="config.js"></script>
+  <script type="module" src="app.js"></script>
+  <noscript><p class="noscript">JanSetu needs JavaScript to sign in and submit reports. Please enable JavaScript.</p></noscript>
 </body>
 </html>
