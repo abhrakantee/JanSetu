@@ -20,3 +20,58 @@
 /* Ambient glow must not expand the mobile viewport or produce horizontal scrolling. */
 .app-shell{overflow-x:clip}
 .location-banner{display:flex;align-items:center;gap:18px;padding:17px 22px;border-radius:19px;margin-bottom:20px;background:linear-gradient(115deg,rgba(36,92,105,.57),rgba(21,47,75,.57))}.location-banner-icon{width:43px;height:43px;flex-shrink:0;display:grid;place-items:center;border:1px solid rgba(171,241,239,.28);border-radius:13px;background:rgba(172,242,239,.12);color:#bcf7ed}.location-banner-copy{flex:1;min-width:0}.location-banner-copy strong{font:800 13px var(--display)}.location-banner-copy p{font-size:11px;color:#96b4c2;line-height:1.55;margin:3px 0 0}.location-banner-actions{display:flex;align-items:center;gap:10px}.location-banner-actions .button{font-size:11px;padding:9px 14px;min-height:40px}@media(max-width:610px){.location-banner{align-items:flex-start;flex-wrap:wrap;gap:10px;padding:15px}.location-banner-icon{height:39px;width:39px}.location-banner-copy{width:calc(100% - 55px);flex:1}.location-banner-actions{margin-left:50px;flex-wrap:wrap}.location-banner-actions .button{min-height:35px;padding:8px 11px}}
+
+/* JanSetu: Fix mobile location banner */
+@media (max-width: 610px) {
+  .location-banner {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+    padding: 18px;
+  }
+
+  .location-banner-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .location-banner-copy {
+    width: auto;
+    min-width: 0;
+    flex: none;
+  }
+
+  .location-banner-copy strong {
+    display: block;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .location-banner-copy p {
+    font-size: 13px;
+    line-height: 1.65;
+    margin-top: 8px;
+  }
+
+  .location-banner-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin: 4px 0 0;
+    width: 100%;
+  }
+
+  .location-banner-actions .button {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
+  }
+
+  .location-banner-actions .text-button {
+    align-self: center;
+    padding: 8px 14px;
+  }
+}
