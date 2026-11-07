@@ -75,3 +75,63 @@
     padding: 8px 14px;
   }
 }
+
+/* Final mobile location banner fix */
+@media screen and (max-width: 610px) {
+  #locationPrompt.location-banner {
+    display: grid !important;
+    grid-template-columns: 44px minmax(0, 1fr) !important;
+    gap: 12px !important;
+    align-items: start !important;
+    padding: 18px !important;
+  }
+
+  #locationPrompt .location-banner-icon {
+    width: 44px;
+    height: 44px;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #locationPrompt .location-banner-copy {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
+  }
+
+  #locationPrompt .location-banner-copy strong {
+    display: block;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  #locationPrompt .location-banner-copy p {
+    font-size: 13px;
+    line-height: 1.65;
+    margin-top: 8px;
+  }
+
+  #locationPrompt .location-banner-actions {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    margin: 0 !important;
+    gap: 10px;
+  }
+
+  #locationPrompt .location-banner-actions .button {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
+  }
+
+  #locationPrompt .location-banner-actions .text-button {
+    align-self: center;
+  }
+}
+
