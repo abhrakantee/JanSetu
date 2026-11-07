@@ -124,3 +124,19 @@ JanSetu/
   vercel.json            Deployment headers
   README.md              Setup and deployment instructions
 ```
+
+
+## 8. Upgrade v6: author deletion + private thumbs-up support
+
+This project update keeps the existing JanSetu UI and Supabase project. A **database migration is mandatory** before either of the new features is secure and fully functional.
+
+1. Back up the existing database if reports are important. Run `supabase/upgrade_private_supports_delete.sql` in your **existing project's Supabase SQL Editor**. Do **NOT** run the whole baseline `schema.sql` again on an existing project. The migration is transactional and preserves existing reports and votes.
+2. Deploy the changed `index.html`, `app.js`, `style.css`, `sw.js` and `supabase/` directory to a **preview branch**, then verify it on desktop and mobile before merging to production.
+3. Test with two different accounts. A user should see **Delete** only on their own report card and details page; another user must not see it. The database also blocks cross-account deletion with row-level security.
+4. To delete, press the trash icon on an owned card or **Delete my report** in details, then accept the browser confirmation. The report, its support votes, status events, and related notifications are removed. Its uploaded photo is removed afterward by the author where storage policy permits. Photo cleanup failures are explicitly reported.
+5. Every signed-in user can tap the vector **thumbs-up** to support/un-support a report. The count is public; supporter names, emails, profile pictures, and **other people's user IDs** are not exposed by the support table or feed. Each account can support once (database primary key). Members can read only **their own** support rows.
+6. Counts are updated in the browser after each vote and when report data is refreshed; they are not guaranteed to appear instantly on other devices without a refresh. The website continues using the existing public evidence-photo storage bucket, so previously shared photo URLs may remain cached temporarily after deletion.
+
+**Security check in Supabase:** Signed in as Account A, try a select on `report_supports`; you should get only Account A's rows. Account B must not be able to delete Account A's report, including through direct API calls. The public `report_feed` view must display only `support_count` and `supported_by_me`, not the list of supporters.
+
+**GitHub/Vercel:** This ZIP intentionally excludes `.git/` because copying another `.git` folder over your working project would damage your Git configuration. Copy the updated **contents** into your existing repository, then create a new branch, commit and push. The current production site remains unchanged until merging the verified preview branch.

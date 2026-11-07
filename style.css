@@ -135,3 +135,20 @@
   }
 }
 
+
+
+/* JanSetu report ownership + private community support controls (v6) */
+.issue-card-meta {display:inline-flex;align-items:center;gap:9px;margin-left:auto;min-width:0}
+.issue-card-meta .issue-time {margin-left:0;white-space:nowrap}
+.report-delete-icon {flex:0 0 auto;width:32px;height:32px;border:1px solid rgba(241,162,156,.33);border-radius:10px;display:grid;place-items:center;color:#ffc1bd;background:rgba(241,162,156,.07);transition:background .2s,border-color .2s}
+.report-delete-icon svg {width:16px;height:16px}
+.report-delete-icon:hover,.report-delete-icon:focus-visible {background:rgba(241,162,156,.17);border-color:rgba(241,162,156,.66)}
+.button.report-delete-action {color:#ffc1bd;background:rgba(241,162,156,.09);border:1px solid rgba(241,162,156,.33)}
+.button.report-delete-action:hover,.button.report-delete-action:focus-visible {background:rgba(241,162,156,.18)}
+.button.support-detail-button.supported {color:#a1f5de;background:rgba(122,237,204,.12);border-color:rgba(122,237,204,.3)}
+.support-button:focus-visible,.report-delete-icon:focus-visible,.report-delete-action:focus-visible {outline:2px solid #b5efdd;outline-offset:3px}
+@media (max-width:610px) {
+  .issue-card-meta {gap:5px}
+  .report-delete-icon {width:36px;height:36px}
+  .detail-actions .button.report-delete-action {width:100%;justify-content:center}
+}

@@ -131,7 +131,9 @@ create policy "see my moderator access" on public.admins for select to authentic
 create policy "members read community reports" on public.reports for select to authenticated using (true);
 create policy "members submit own new reports" on public.reports for insert to authenticated
   with check (author_id = (select auth.uid()) and status = 'Reported' and split_part(image_path,'/',1) = (select auth.uid())::text);
-create policy "members read support counts" on public.report_supports for select to authenticated using (true);
+create policy "authors delete own reports" on public.reports for delete to authenticated
+  using (author_id = (select auth.uid()));
+create policy "members read their own supports" on public.report_supports for select to authenticated using (user_id = (select auth.uid()));
 create policy "members support reports" on public.report_supports for insert to authenticated with check (user_id = (select auth.uid()));
 create policy "members retract support" on public.report_supports for delete to authenticated using (user_id = (select auth.uid()));
 create policy "members read report timeline" on public.report_status_events for select to authenticated using (true);
@@ -143,15 +145,23 @@ revoke all on public.profiles,public.admins,public.reports,public.report_support
 revoke all on public.profiles,public.admins,public.reports,public.report_supports,public.report_status_events,public.notifications from authenticated;
 grant select on public.profiles,public.admins,public.reports,public.report_supports,public.report_status_events,public.notifications to authenticated;
 grant update(full_name) on public.profiles to authenticated;
-grant insert on public.reports to authenticated;
+grant insert,delete on public.reports to authenticated;
 grant insert,delete on public.report_supports to authenticated;
 grant update(is_read) on public.notifications to authenticated;
 
+-- Return only total support count. Public API cannot read other supporters' user IDs.
+create or replace function public.report_support_total(p_report_id uuid)
+returns integer language sql stable security definer set search_path = '' as $$
+  select count(*)::integer from public.report_supports s where s.report_id = p_report_id;
+$$;
+revoke all on function public.report_support_total(uuid) from public,anon;
+grant execute on function public.report_support_total(uuid) to authenticated;
+
 -- Per-row counts + supported-by-me are calculated server-side in Postgres.
--- SECURITY INVOKER is essential: underlying RLS stays active for every request.
+-- SECURITY INVOKER on the view keeps reports RLS active for every request.
 create or replace view public.report_feed with (security_invoker = true) as
 select r.*,
-       (select count(*) from public.report_supports s where s.report_id=r.id)::integer as support_count,
+       public.report_support_total(r.id) as support_count,
        exists (select 1 from public.report_supports s where s.report_id=r.id and s.user_id=(select auth.uid())) as supported_by_me
 from public.reports r;
 revoke all on public.report_feed from anon,public;
