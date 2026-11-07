@@ -7,6 +7,8 @@ const ICON = (name, cls = '') => `<svg class="${cls}" aria-hidden="true"><use hr
 const SAFE_CATEGORIES = ['Roads', 'Streetlights', 'Waste', 'Water', 'Public Safety', 'Infrastructure', 'Other'];
 const STATUS_ORDER = ['Reported', 'In Review', 'In Progress', 'Resolved', 'Verified'];
 const PAGE_SIZE = 48;
+const pendingSupports = new Set();
+const pendingDeletes = new Set();
 const state = {
   client: null, user: null, profile: null, isAdmin: false,
   reports: [], myReports: [], notifications: [], total: 0, counts: {},
@@ -279,12 +281,14 @@ function issueCard(report) {
   const src = photoURL(report);
   const category = SAFE_CATEGORIES.includes(report.category) ? report.category : 'Other';
   const supported = Boolean(report.supported_by_me);
+  const count = Math.max(0, Number(report.support_count || 0));
+  const owned = Boolean(state.user && report.author_id === state.user.id);
   return `<article class="issue-card" data-report-card="${escapeHTML(report.id)}">
     <div class="issue-card-photo">${src ? `<img src="${escapeHTML(src)}" alt="Evidence photo for ${escapeHTML(report.title)}" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><div class="issue-no-photo" hidden>${ICON('photo')}</div>` : `<div class="issue-no-photo">${ICON('photo')}</div>`}<span class="issue-category">${escapeHTML(category)}</span></div>
-    <div class="issue-card-body"><div class="issue-card-top"><span class="status-pill ${statusClass(report.status)}">${escapeHTML(report.status)}</span><span class="issue-time">${timestamp(report.created_at)}</span></div>
+    <div class="issue-card-body"><div class="issue-card-top"><span class="status-pill ${statusClass(report.status)}">${escapeHTML(report.status)}</span><span class="issue-card-meta"><span class="issue-time">${timestamp(report.created_at)}</span>${owned ? `<button type="button" class="report-delete-icon" data-delete-report="${escapeHTML(report.id)}" aria-label="Delete your report" title="Delete your report">${ICON('trash')}</button>` : ''}</span></div>
     <h3>${escapeHTML(report.title)}</h3><p class="issue-description">${escapeHTML(report.description)}</p>
     <div class="issue-location">${ICON('pin')}<span title="${escapeHTML(report.address_text)}">${escapeHTML(report.address_text)}</span></div>
-    <div class="issue-card-footer"><button type="button" class="support-button ${supported ? 'supported':''}" data-support-id="${escapeHTML(report.id)}" aria-label="${supported?'Remove support':'Support issue'}" aria-pressed="${supported}">${ICON('heart')} <span>${Number(report.support_count || 0)} support${Number(report.support_count || 0) === 1 ? '' : 's'}</span></button><button type="button" class="detail-button" data-open-report="${escapeHTML(report.id)}">View details ${ICON('arrow')}</button></div></div></article>`;
+    <div class="issue-card-footer"><button type="button" class="support-button ${supported ? 'supported':''}" data-support-id="${escapeHTML(report.id)}" aria-label="${supported?'Remove your support':'Support this report'}" aria-pressed="${supported}" title="Support counts are public; supporter identities are private">${ICON('thumb')} <span>${count} support${count === 1 ? '' : 's'}</span></button><button type="button" class="detail-button" data-open-report="${escapeHTML(report.id)}">View details ${ICON('arrow')}</button></div></div></article>`;
 }
 function emptyState(title, description, action = false) {
   return `<div class="empty-state">${ICON('map')}<strong>${escapeHTML(title)}</strong><p>${escapeHTML(description)}</p>${action ? `<button type="button" class="button primary" data-view="report">Create first report ${ICON('arrow')}</button>`:''}</div>`;
@@ -356,18 +360,66 @@ function showView(view) {
 }
 async function toggleSupport(id) {
   if (!state.user) return toast('Sign in to support a report.',true);
+  if (pendingSupports.has(id)) return;
   const report = [...state.reports,...state.myReports].find(r=>r.id===id);
-  if (!report) return;
+  if (!report) return toast('This report is no longer available.',true);
+  pendingSupports.add(id);
   try {
     const response = report.supported_by_me
       ? await state.client.from('report_supports').delete().eq('report_id',id).eq('user_id',state.user.id)
       : await state.client.from('report_supports').insert({report_id:id,user_id:state.user.id});
     if (response.error) throw response.error;
     const next = !report.supported_by_me;
-    for (const r of [...state.reports,...state.myReports]) if (r.id===id) {r.supported_by_me=next;r.support_count=Math.max(0,Number(r.support_count||0)+(next?1:-1));}
+    // A report may appear in both lists as the same object. Update each copy only once.
+    const seen = new Set();
+    for (const r of [...state.reports,...state.myReports]) if (r.id===id && !seen.has(r)) {
+      seen.add(r);
+      r.supported_by_me=next;
+      r.support_count=Math.max(0,Number(r.support_count||0)+(next?1:-1));
+    }
     renderHome(); renderExplore(); renderMyActivity(); fetchCounts();
+    // Keep open details in sync without revealing who supported the report.
+    const dialogButton = $('reportDialog').querySelector(`[data-support-id="${id}"]`);
+    if (dialogButton) {
+      const latest = [...state.reports,...state.myReports].find(r=>r.id===id);
+      const supportCount = Number(latest?.support_count||0);
+      dialogButton.innerHTML = `${ICON('thumb')} ${next?'Supported':'Support this issue'} (${supportCount})`;
+      dialogButton.setAttribute('aria-pressed', String(next));
+      dialogButton.classList.toggle('supported',next);
+    }
     toast(next?'Your support has been recorded.':'Your support was removed.');
   } catch(error) { toast(friendlyError(error),true); }
+  finally {pendingSupports.delete(id);}
+}
+async function deleteOwnReport(id) {
+  if (!state.user || pendingDeletes.has(id)) return;
+  const report = [...state.reports,...state.myReports].find(r => r.id === id);
+  // The UI guard is not the security boundary: Supabase RLS enforces this again.
+  if (!report || report.author_id !== state.user.id) return toast('You can only delete your own report.',true);
+  if (!confirm(`Delete your report "${report.title}" permanently? Its support votes and status history will also be removed. This cannot be undone.`)) return;
+  pendingDeletes.add(id);
+  try {
+    const {data,error} = await state.client.from('reports').delete()
+      .eq('id',id).eq('author_id',state.user.id).select('id,image_path');
+    if (error) throw error;
+    if (!data?.length) throw Error('Report not deleted. Please check your permissions and try again.');
+    if ($('reportDialog').open) $('reportDialog').close();
+    state.reports = state.reports.filter(r=>r.id!==id);
+    state.myReports = state.myReports.filter(r=>r.id!==id);
+    renderHome();renderExplore();renderMyActivity();renderAdmin();
+    // Delete evidence only AFTER its report is deleted; storage policy blocks
+    // deletion while the file is still attached to an existing report.
+    let photoCleanupFailed = false;
+    if (data[0].image_path) {
+      try {
+        const result = await state.client.storage.from('issue-photos').remove([data[0].image_path]);
+        if (result.error) throw result.error;
+      } catch(error) { console.warn('Photo cleanup needs attention',error);photoCleanupFailed=true; }
+    }
+    toast(photoCleanupFailed ? 'Report deleted. Its photo could not be cleared from storage; contact a moderator.' : 'Your report was permanently deleted.', photoCleanupFailed);
+    await refreshAll();
+  } catch(error) {toast(friendlyError(error),true);}
+  finally {pendingDeletes.delete(id);}
 }
 async function openReport(id) {
   const r = [...state.reports,...state.myReports].find(item=>item.id===id);
@@ -375,8 +427,9 @@ async function openReport(id) {
   const dialog = $('reportDialog');
   const src = photoURL(r);
   const supported = Boolean(r.supported_by_me);
+  const owned = Boolean(state.user && r.author_id === state.user.id);
   const mapsUrl = r.latitude!=null && r.longitude!=null ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${r.latitude},${r.longitude}`)}` : '';
-  $('dialogContent').innerHTML = `${src ? `<img class="dialog-image" src="${escapeHTML(src)}" alt="Issue photo" onerror="this.hidden=true">`:''}<div class="detail-body"><div class="detail-meta"><span class="status-pill ${statusClass(r.status)}">${escapeHTML(r.status)}</span><span>${escapeHTML(r.category)}</span><span>${timestamp(r.created_at)}</span></div><h2 id="detailTitle">${escapeHTML(r.title)}</h2><p>${escapeHTML(r.description)}</p><div class="detail-meta">${ICON('pin')}<span>${escapeHTML(r.address_text)}</span></div><div class="detail-actions"><button type="button" class="button subtle" data-support-id="${escapeHTML(r.id)}">${ICON('heart')} ${supported?'Remove support':'Support this issue'} (${Number(r.support_count||0)})</button>${mapsUrl ? `<a class="button outlined" href="${escapeHTML(mapsUrl)}" target="_blank" rel="noopener noreferrer">${ICON('external')} Open map</a>`:''}${r.author_id===state.user.id&&r.status==='Resolved'?`<button class="button primary" data-verify-id="${escapeHTML(r.id)}">${ICON('check')} Verify resolution</button>`:''}</div><div class="timeline"><h3>Progress timeline</h3><div id="detailTimeline"><p>Loading updates…</p></div></div></div>`;
+  $('dialogContent').innerHTML = `${src ? `<img class="dialog-image" src="${escapeHTML(src)}" alt="Issue photo" onerror="this.hidden=true">`:''}<div class="detail-body"><div class="detail-meta"><span class="status-pill ${statusClass(r.status)}">${escapeHTML(r.status)}</span><span>${escapeHTML(r.category)}</span><span>${timestamp(r.created_at)}</span></div><h2 id="detailTitle">${escapeHTML(r.title)}</h2><p>${escapeHTML(r.description)}</p><div class="detail-meta">${ICON('pin')}<span>${escapeHTML(r.address_text)}</span></div><div class="detail-actions"><button type="button" class="button subtle support-detail-button ${supported?'supported':''}" data-support-id="${escapeHTML(r.id)}" aria-pressed="${supported}" title="The supporter count is public. Identities stay private.">${ICON('thumb')} ${supported?'Supported':'Support this issue'} (${Math.max(0,Number(r.support_count||0))})</button>${mapsUrl ? `<a class="button outlined" href="${escapeHTML(mapsUrl)}" target="_blank" rel="noopener noreferrer">${ICON('external')} Open map</a>`:''}${r.author_id===state.user.id&&r.status==='Resolved'?`<button class="button primary" data-verify-id="${escapeHTML(r.id)}">${ICON('check')} Verify resolution</button>`:''}${owned ? `<button type="button" class="button report-delete-action" data-delete-report="${escapeHTML(r.id)}">${ICON('trash')} Delete my report</button>`:''}</div><div class="timeline"><h3>Progress timeline</h3><div id="detailTimeline"><p>Loading updates…</p></div></div></div>`;
   dialog.showModal();
   try {
     const {data,error} = await state.client.from('report_status_events').select('id,status,created_at').eq('report_id',id).order('created_at',{ascending:true}).limit(50);
@@ -626,6 +679,7 @@ function attachUIHandlers() {
     const nav=event.target.closest('[data-view]');if(nav&&state.user){showView(nav.dataset.view);return;}
     const open=event.target.closest('[data-open-report]');if(open){openReport(open.dataset.openReport);return;}
     const support=event.target.closest('[data-support-id]');if(support){toggleSupport(support.dataset.supportId);return;}
+    const remove=event.target.closest('[data-delete-report]');if(remove){deleteOwnReport(remove.dataset.deleteReport);return;}
     const verify=event.target.closest('[data-verify-id]');if(verify){verifyResolution(verify.dataset.verifyId);return;}
     const read=event.target.closest('[data-read-notification]');if(read){readNotification(read.dataset.readNotification);return;}
     const admin=event.target.closest('[data-admin-save]');if(admin){saveAdminStatus(admin.dataset.adminSave,admin);return;}

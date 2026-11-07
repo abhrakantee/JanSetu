@@ -1,0 +1,63 @@
+JANSETU v6 — PRIVATE THUMBS-UP + DELETE MY REPORT
+===============================================
+
+This ZIP is built from your uploaded, current JanSetu files. It does not
+contain a .git directory and does not change the website's domain.
+
+DO THESE STEPS IN THIS ORDER
+
+1) BACK UP the current JanSetu website folder and (if important) your Supabase
+   database before making changes.
+
+2) CREATE A SAFE GITHUB BRANCH in the EXISTING JanSetu VS Code folder, BEFORE
+   copying in files from this ZIP:
+
+   git fetch origin
+   git switch -c report-controls-v6 origin/main
+
+   If you have uncommitted edits, save/stash them before switching branches.
+
+3) UNZIP this archive. Open its JanSetu folder and copy its CONTENTS into your
+   existing JanSetu working folder. Replace matching files when prompted.
+   DO NOT remove or replace the .git folder in your working repository.
+   Your Supabase config.js should keep its CURRENT public project URL/key.
+   Never commit any Supabase service-role secret, database password or Google
+   OAuth client secret.
+
+4) RUN THE DATABASE MIGRATION in your EXISTING Supabase project:
+   Supabase Dashboard > SQL Editor > New query
+   Open supabase/upgrade_private_supports_delete.sql
+   Copy its entire contents, paste and click Run.
+   This is necessary to enable author deletion and protect supporter identities.
+   It preserves existing report/support data. DO NOT rerun schema.sql.
+
+5) TEST LOCALLY, then create a Vercel preview:
+
+   python -m http.server 5500
+
+   Then use a fresh terminal:
+
+   git add -A
+   git commit -m "Add private thumbs-up support and owner-only report deletion"
+   git push -u origin report-controls-v6
+
+   Open Vercel > jansetu-26 > Deployments > report-controls-v6 preview.
+   You may need to allow its preview URL under Supabase Auth Redirect URLs
+   to test Google sign-in. Keep the production Site URL unchanged.
+
+6) USING TWO TEST ACCOUNTS:
+   - Account A creates a test report. Only A can see and use Delete.
+   - Account B can support A's report but cannot delete it.
+   - Each account can support once and unsupport.
+   - Everyone sees ONLY total support counts, not supporter identities.
+   - Verify mobile layout, Google login, camera/GPS, and existing features.
+   - NOTE: Deleting a report really deletes it; use only disposable test data.
+
+7) IF THE PREVIEW PASSES: merge report-controls-v6 into main on GitHub;
+   verify Vercel Production > Ready at https://jansetu-26.vercel.app
+   If the old version persists, refresh the page to update the service worker.
+
+NOTE: Local static/browser tests passed, but no live Supabase credentials are
+accessible in this environment. Production permissions and real uploads must
+be tested in your account. Existing storage/public-photo cache may retain
+previously published photo URLs temporarily after deletion.

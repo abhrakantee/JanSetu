@@ -1,5 +1,5 @@
-const CACHE_NAME = 'jansetu-shell-v5';
-const ASSETS = ['./', './index.html', './style.css', './app.js', './config.js', './manifest.webmanifest', './assets/jansetu-logo.jpg', './assets/road.webp', './assets/waste.webp', './assets/streetlight.webp', './assets/icon-192.png'];
+const CACHE_NAME = 'jansetu-shell-v6';
+const ASSETS = ['./', './index.html', './style.css?v=6', './app.js?v=6', './config.js', './manifest.webmanifest', './assets/jansetu-logo.jpg', './assets/road.webp', './assets/waste.webp', './assets/streetlight.webp', './assets/icon-192.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
 });

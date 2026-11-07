@@ -31,6 +31,14 @@ assert 'localStorage.setItem("jansetuReports"' not in script
 assert 'getCurrentPosition' in script and 'signInWithOAuth' in script and 'signInWithOtp' in script
 assert 'row level security' in schema.lower() and 'report_feed' in schema
 assert (root/'config.js').is_file()
+upgrade = (root/'supabase/upgrade_private_supports_delete.sql').read_text(encoding='utf-8')
+assert 'drop policy if exists "members read support counts"' in upgrade
+assert 'create policy "members read their own supports"' in upgrade
+assert 'security definer' in upgrade.lower() and 'report_support_total' in upgrade
+assert 'create policy "authors delete own reports"' in upgrade
+assert 'grant delete on public.reports to authenticated' in upgrade
+assert 'data-delete-report' in script and "ICON('thumb')" in script
+assert '<symbol id="i-thumb"' in html and '<symbol id="i-trash"' in html
 json.loads((root/'manifest.webmanifest').read_text())
 json.loads((root/'vercel.json').read_text())
 subprocess.run(['node','--check',str(root/'app.js')],check=True)
